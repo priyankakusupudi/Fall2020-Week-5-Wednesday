@@ -2,13 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Horizontal Stacked Bar Chart</title>
+    <title></title>
     <script src="../libs/d3/d3.min.js"></script>
 
 </head>
 <body>
-<div style="width: 80%"></div>
+<div id = "container" width="100%">
+<svg width ="100%" height ="50%" style ="background-color: #AEA2FD"
+     viewbox = " 0 0 1000 500">
+
+</svg>
+</div>
 <script>
+    let svg = d3.selectAll('svg');
+    d3.csv("data_sample.csv",d3.autoType).then(
+        function(data)
+        {
+            max_cost = d3.max(d3.map(data,function(d){return d.EstimatedCost}));
+            let dates_max = d3.extent(data,function(d){return d.date})
+            let scaling = d3.scaleLinear().domain([0,max_cost]).range(400,0)
+
+
+    scaleDates = d3.scaleTime()
+            .domain(dates_max)
+            .range([50,1000-50]);
+
+    let estimated_cost = d3.line()
+            .x(function(d,k){return k*20})
+            .y(function(d){return d.EstimatedCost})
+     let year_storage= d3.line()
+            .x(function(d,i){return i*20})
+            .y(function(d){return d.YearlyStorage})
+
+    let storage_paths = svg.append('path')
+            .data([data])
+            .attr("d",estimated_cost)
+            .style("fill","none")
+            .style("stroke","red")
+
+
+    let cost_path = svg.append('path')
+            .data([data])
+            .attr("d",year_storage)
+            .style("fill","none")
+            .style("stroke","brown")
+            .style("stroke-width","2px")
+        }
+    )
 
 </script>
 </body>

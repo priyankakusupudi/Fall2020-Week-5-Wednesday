@@ -20,12 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="862777db-be81-4dbf-a561-62474ea5ca78" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Example_Wed 5.2/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Example_Wed 5.3/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Example_Wed 5.4/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Example_Wed 5.3/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Example_Wed 5.3/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Example_Wed 5.4/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Example_Wed 5.4/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Example_Wed 5.4/index_simplified.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Exercise_Wed 5.1/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Exercise_Wed 5.1/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +66,8 @@
       <option name="presentableId" value="Default" />
       <updated>1601471123480</updated>
       <workItem from="1601471125286" duration="3525000" />
+      <workItem from="1601689457407" duration="875000" />
+      <workItem from="1601864609008" duration="5113000" />
     </task>
     <servers />
   </component>
@@ -86,5 +84,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1601869723011">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1601869723011" />
   </component>
 </project>
