@@ -1,14 +1,106 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Area Chart</title>
-    <script src="../libs/d3/d3.min.js"></script>
-</head>
-<body>
-<div style="width: 80%"></div>
-<script>
+    <title>D3 Area</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 
+
+</head>
+
+<body>
+<svg width="100%" height="100%" viewBox="0 0 1000 1000"
+     style="background-color: #f3eee8">
+</svg>
+<script>
+    let svg = d3.select('svg');
+    let xScale
+    let margins = {x:80, y:50};
+    // step 2 read the database
+    const datalink = "https://raw.githubusercontent.com/umassdgithub/Fall2020-Week-5-Wednesday/master/Exercise_Wed%205.1/data_sample.csv";
+    let datafile = d3.csv(datalink,
+        function(d) {
+            return {
+                date: d3.timeParse("%Y-%m")(d.date),
+                EstimatedCost: Number(d.EstimatedCost),
+                RawMaterial: Number(d.RawMaterial),
+                Workmanship: Number(d.Workmanship),
+                YearlyStorage: Number(d.YearlyStorage)}
+        });
+
+    const styling_colors = [
+        '#4E96A0',
+        '#CBDF50',
+        '#DA557E',
+        '#56BA6F'];
+    datafile.then(function(data) {
+        let stack = d3.stack()
+            .keys(['EstimatedCost', 'RawMaterial', 'Workmanship', 'YearlyStorage']);
+        let stackedSeries = stack(data);
+        // step 3 get the data and svg element extent
+        // svg extent
+        let rng = svg.attr('viewBox').split(' ')
+        rng = d3.map(rng, function (d) {
+            return d
+        })
+        let xRng = [rng[0] + margins.x, rng[2] - margins.x];
+        let yRng = [rng[3] - margins.y, rng[1] + margins.y];
+        // data extent (domain)
+        let date_extent = d3.extent(data,
+            function (d) {
+                return d.date
+            })
+        // step 4 make the X and Y scale
+
+        xScale = d3.scaleTime()
+            .domain(d3.extent(data , function(d) { return d.date; }))
+            .range(xRng);
+
+        // as the stacks are 2 arrays, it way to get max is by nested max callback
+        let yMax = d3.max(
+            stackedSeries,
+            function(d)
+            {
+                return d3.max(d, function(d) {return d[1]}) // the maxu
+            })
+        let yScale = d3.scaleLinear()
+            .domain([0,yMax])
+            .range(yRng);
+
+        // Step 5 & 6 area generator
+        let area = d3.area()
+            .x(function (d,i) {
+                return xScale(data[i].date);
+            })
+            .y0(function (d) {
+                return yScale(d[0]);
+            })
+            .y1(function (d) {
+                return yScale(d[1]);
+            });
+        console.log(stackedSeries)
+        svg.selectAll('path')
+            .data(stackedSeries)
+            .enter()
+            .append('path')
+            .style('fill', function (d, i) {
+                return styling_colors[i];
+            })
+            .attr('d', area);
+
+        // step 7 add the axis
+        // the paths are very close to the margins, so let us add some margin first
+        // let us add the axis to each line in a separate group so we can move them
+        // to the margins using transform attr
+        // adding x axis:
+        let xAxis = svg.append('g').attr("transform", "translate(" + (0) + "," + (yRng[0]) + ")")
+            .attr('class', 'axis')
+            .call(d3.axisBottom(xScale));// call the scale function to automatically add the axis
+        let yAxis = svg.append('g')
+            .attr('class', 'axis')
+            .attr("transform", "translate(" + (margins.x) + "," + (0) + ")")
+            .call(d3.axisLeft(yScale));
+    });
 </script>
 </body>
 </html>
